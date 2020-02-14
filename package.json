@@ -1,0 +1,19 @@
+{
+  "name": "techdegree-project10",
+  "version": "1.0.0",
+  "description": "The 10th and last project in Treehouse's Full Stack JavaScript Techdegree.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woleogounchi/techdegree-project10.git"
+  },
+  "author": "Kolawole Ogounchi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/woleogounchi/techdegree-project10/issues"
+  },
+  "homepage": "https://github.com/woleogounchi/techdegree-project10#readme"
+}
