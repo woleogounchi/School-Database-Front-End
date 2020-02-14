@@ -15,6 +15,7 @@ import CourseDetail from "./components/course_components/CourseDetail";
 
 import UserSignIn from './components/users_components/UserSignIn'
 import UserSignUp from './components/users_components/UserSignUp'
+import UserSignOut from './components/users_components/UserSignOut'
 
 import withContext from "./Context";
 
@@ -23,6 +24,7 @@ const CoursesWithContext = withContext(Courses);
 const CourseDetailWithContext = withContext(CourseDetail);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp);
+const UserSignOutWithContext = withContext(UserSignOut);
 
 class App extends Component {
 
@@ -45,6 +47,7 @@ class App extends Component {
               )}
             />
             <Route exact path="/signin" component={UserSignInWithContext} />
+            <Route exact path="/signout" component={UserSignOutWithContext} />
             <Route exact path="/signup" component={UserSignUpWithContext} />
           </Switch>
         </div>
