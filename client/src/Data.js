@@ -22,6 +22,7 @@ export default class Data {
     return fetch(url, options);
   }
 
+  // Get user by credential when signing in 
   async getUser(emailAddress, password) {
     const response = await this.api(`/users`, 'GET', null, true, { emailAddress, password });
     if (response.status === 200) {
@@ -35,6 +36,7 @@ export default class Data {
     }
   }
   
+  // Create user with personal informations at sign up  
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
     if (response.status === 201) {
@@ -46,6 +48,24 @@ export default class Data {
       });
     }
     else {
+      throw new Error();
+    }
+  }
+
+  // Create course by signed in user
+  async createCourse(course, emailAddress, password) {
+    const response = await this.api(`/courses`, 'POST', course, true, {
+      emailAddress,
+      password
+    });
+    if (response.status === 201) {
+      return [];
+    } else if (response.status === 400) {
+      return response.json().then(data => {
+        console.log(data);
+        return data.errors;
+      });
+    } else {
       throw new Error();
     }
   }
