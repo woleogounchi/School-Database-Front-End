@@ -51,22 +51,4 @@ export default class Data {
       throw new Error();
     }
   }
-
-  // Create course by signed in user
-  async createCourse(course, emailAddress, password) {
-    const response = await this.api(`/courses`, 'POST', course, true, {
-      emailAddress,
-      password
-    });
-    if (response.status === 201) {
-      return [];
-    } else if (response.status === 400) {
-      return response.json().then(data => {
-        console.log(data);
-        return data.errors;
-      });
-    } else {
-      throw new Error();
-    }
-  }
 }
