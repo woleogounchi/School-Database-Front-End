@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Form from '../Form';
 
 // This component allows authenticated user to create a course 
-class createCourse extends Component {
+class CreateCourse extends Component {
   state = {
     course: {
       id: '',
@@ -30,7 +30,12 @@ class createCourse extends Component {
   submit = async () => {
     const url = `/courses`;
     try {
-      const response = await this.props.context.data.api(url, 'POST', this.state.course, true, this.props.context.authenticatedUser);
+      const response = await this.props.context.data.api(url, 
+                                                        'POST', 
+                                                        this.state.course, 
+                                                        true, 
+                                                        this.props.context.authenticatedUser);
+
       if (response.status === 201) {
         this.props.history.push("/")
       } else if (response.status === 403) {
@@ -155,4 +160,4 @@ class createCourse extends Component {
   }
 }
 
-export default createCourse;
+export default CreateCourse;
