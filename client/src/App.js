@@ -12,6 +12,7 @@ import Header from "./components/Header";
 
 import Courses from "./components/course_components/Courses";
 import CourseDetail from "./components/course_components/CourseDetail";
+import CreateCourse from "./components/course_components/CreateCourse";
 
 import UserSignIn from './components/users_components/UserSignIn'
 import UserSignUp from './components/users_components/UserSignUp'
@@ -26,6 +27,7 @@ const HeaderWithContext = withContext(Header);
 const CoursesWithContext = withContext(Courses);
 const AuthWithContext = withContext(Authenticated);
 const CourseDetailWithContext = withContext(CourseDetail);
+const CreateCourseWithContext = withContext(CreateCourse);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignOutWithContext = withContext(UserSignOut);
@@ -50,6 +52,7 @@ class App extends Component {
                 />
               )}
             />
+            <Route exact path="/courses/create" component={CreateCourseWithContext} />
             <Route exact path="/Forbidden" component={Forbidden} />
             <PrivateRoute path="/authenticated" component={AuthWithContext} />
             <Route exact path="/signin" component={UserSignInWithContext} />
