@@ -79,15 +79,9 @@ class CreateCourse extends Component {
       <div className='bounds course--detail'>
         <h1>Create Course</h1>
         <div>
-          <ul className="validation--errors--label">
-              {
-                errors
-                    ? errors.map(error => <li key={error}>{error}</li>)
-                    : ''
-              }
-          </ul>
           <Form
             cancel={this.cancel}
+            errors={errors}
             submit={this.submit}
             submitButtonText='Create Course'
             elements={() => (

@@ -42,6 +42,7 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/" component={CoursesWithContext} />
+            <Route exact path="/courses/create" component={CreateCourseWithContext} />
             <Route
               exact
               path='/courses/:id'
@@ -52,7 +53,6 @@ class App extends Component {
                 />
               )}
             />
-            <Route exact path="/courses/create" component={CreateCourseWithContext} />
             <Route exact path="/Forbidden" component={Forbidden} />
             <PrivateRoute path="/authenticated" component={AuthWithContext} />
             <Route exact path="/signin" component={UserSignInWithContext} />
