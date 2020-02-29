@@ -13,6 +13,9 @@ import Header from "./components/Header";
 import Courses from "./components/course_components/Courses";
 import CourseDetail from "./components/course_components/CourseDetail";
 import CreateCourse from "./components/course_components/CreateCourse";
+import UpdateCourse from "./components/course_components/UpdateCourse";
+import DeleteCourse from "./components/course_components/DeleteCourse";
+
 
 import UserSignIn from './components/users_components/UserSignIn'
 import UserSignUp from './components/users_components/UserSignUp'
@@ -28,6 +31,8 @@ const CoursesWithContext = withContext(Courses);
 const AuthWithContext = withContext(Authenticated);
 const CourseDetailWithContext = withContext(CourseDetail);
 const CreateCourseWithContext = withContext(CreateCourse);
+const UpdateCourseWithContext = withContext(UpdateCourse);
+const DeleteCourseWithContext = withContext(DeleteCourse);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignOutWithContext = withContext(UserSignOut);
@@ -43,6 +48,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={CoursesWithContext} />
             <Route exact path="/courses/create" component={CreateCourseWithContext} />
+            <Route exact path="/courses/delete" component={DeleteCourseWithContext} />
+            <Route exact path="/courses/:id/update" component={UpdateCourseWithContext} />
             <Route
               exact
               path='/courses/:id'
