@@ -47,9 +47,16 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/" component={CoursesWithContext} />
-            <Route exact path="/courses/create" component={CreateCourseWithContext} />
-            <Route exact path="/courses/delete" component={DeleteCourseWithContext} />
-            <Route exact path="/courses/:id/update" component={UpdateCourseWithContext} />
+            <PrivateRoute 
+              exact 
+              path="/courses/create" 
+              component={CreateCourseWithContext} 
+            />
+            <PrivateRoute 
+              exact 
+              path="/courses/:id/update" 
+              component={UpdateCourseWithContext}
+            />
             <Route
               exact
               path='/courses/:id'
@@ -60,11 +67,35 @@ class App extends Component {
                 />
               )}
             />
-            <Route exact path="/Forbidden" component={Forbidden} />
-            <PrivateRoute path="/authenticated" component={AuthWithContext} />
-            <Route exact path="/signin" component={UserSignInWithContext} />
-            <Route exact path="/signout" component={UserSignOutWithContext} />
-            <Route exact path="/signup" component={UserSignUpWithContext} />
+            <Route 
+              exact 
+              path="/courses/delete" 
+              component={DeleteCourseWithContext} 
+            />
+            <Route 
+              exact 
+              path="/Forbidden" 
+              component={Forbidden}
+            />
+            <PrivateRoute 
+              path="/authenticated" 
+              component={AuthWithContext}
+            />
+            <Route
+              exact 
+              path="/signin" 
+              component={UserSignInWithContext}
+            />
+            <Route 
+              exact 
+              path="/signout" 
+              component={UserSignOutWithContext}
+            />
+            <Route
+              exact 
+              path="/signup" 
+              component={UserSignUpWithContext}
+            />
           </Switch>
         </div>
       </Router>
