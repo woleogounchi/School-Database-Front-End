@@ -30,11 +30,13 @@ class CreateCourse extends Component {
   submit = async () => {
     const url = `/courses`;
     try {
-      const response = await this.props.context.data.api(url, 
-                                                        'POST', 
-                                                        this.state.course, 
-                                                        true, 
-                                                        this.props.context.authenticatedUser);
+      const response = await this.props.context.data.api(
+        url, 
+        'POST', 
+        this.state.course, 
+        true, 
+        this.props.context.authenticatedUser
+      );
 
       if (response.status === 201) {
         this.props.history.push("/")

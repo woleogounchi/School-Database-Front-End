@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 
-export default class CourseDetail extends Component {
+class CourseDetail extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -102,3 +102,5 @@ handleDelete = (user, id) => {
     );
   }
 }
+
+export default CourseDetail;
