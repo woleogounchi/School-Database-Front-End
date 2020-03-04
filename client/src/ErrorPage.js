@@ -1,23 +1,17 @@
-import React from "react";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default ErrorPage;
-
-function ErrorPage(props) {
+//This component is for status 500 rendering
+const ErrorPage = () => {
   return (
-    <div id="root">
-      <div>
-        <div class="header">
-          <div class="bounds">
-            <h1 class="header--logo">Courses</h1>
-            <nav><a class="signup" href="sign-up.html">Sign Up</a><a class="signin" href="sign-in.html">Sign In</a></nav>
-          </div>
-        </div>
-        <hr />>
-        <div class="bounds">
-          <h1>Error</h1>
-          <p>Sorry! We just encountered an unexpected error.</p>
-        </div>
-      </div>
+    <div className='bounds'>
+      <h1>Error</h1>
+      <p>Sorry! This is UnhandledError page error.</p>
+      <Link className='button button-secondary' to='/'>
+        Return to List
+      </Link>
     </div>
   );
-}
+};
+
+export default ErrorPage;

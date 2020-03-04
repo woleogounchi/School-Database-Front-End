@@ -1,106 +1,144 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from 'react-markdown';
 
 class CourseDetail extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      course: [],
-      user: []
+  componentDidMount() {
+    const { context, courseId } = this.props;
+    context.data.getCourse(courseId)
+      .then(singleCourse => {
+        // If title area empty, it means there's no course an user redirected to notfound
+        if (singleCourse.title === '') {
+          this.props.history.push('/notfound');
+        }
+        // If actual user logged in, state will be updated with the authentication data
+        if (context.authenticatedUser !== null) {
+          this.setState({
+            singleCourse,
+            authenticatedUserId: context.authenticatedUser.id
+          });
+        } else if (context.authenticatedUser === null) {
+          this.setState({
+            singleCourse
+          });
+        } else {
+          this.props.history.push('/notfound');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.props.history.push('/error');
+      });
+  }
+
+  // Function that handles course delete if signed in user is course owner
+  handleDelete = () => {
+    const { context, courseId } = this.props;
+    const { authenticatedUser } = context;
+    const courseOwnerUser = this.state.singleCourse.User.emailAddress;
+    const signedInUserEmailAdress = authenticatedUser.emailAddress;
+    const signedInUserPassword = authenticatedUser.password;
+    if (courseOwnerUser === signedInUserEmailAdress) {
+      context.data.deleteCourse(courseId, signedInUserEmailAdress, signedInUserPassword)
+        .then(errors => {
+          if (errors.length) {
+            this.setState({ errors });
+          } else {
+            this.props.history.push('/');
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.props.history.push('/notfound');
+        });
+    }
+  };
+
+  render() {
+    if (this.state) {
+      const {
+        id,
+        title,
+        description,
+        estimatedTime,
+        materialsNeeded,
+        userId
+      } = this.state.singleCourse;
+
+      const { authenticatedUserId } = this.state;
+      const { firstName, lastName } = this.state.singleCourse.User;
+      return (
+        <div>
+          <div>
+            <div className='actions--bar'>
+              <div className='bounds'>
+                <div className='grid-100'>
+                  {/* Delete and update buttons only display for authenticated user */}
+                  {userId === authenticatedUserId ? (
+                    <span>
+                      <Link className='button' to={`/courses/${id}/update`}>
+                        Update Course
+                      </Link>
+                      <a
+                        className='button'
+                        onClick={() => {
+                          this.handleDelete();
+                        }}
+                        href='/'
+                      >
+                        {' '}
+                        Delete Course
+                      </a>
+                    </span>
+                  ) : (
+                    <span></span>
+                  )}
+
+                  <Link className='button button-secondary' to='/'>
+                    Return to List
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='bounds course--detail'>
+            <div className='grid-66'>
+              <div className='course--header'>
+                <h4 className='course--label'>Course</h4>
+                <h3 className='course--title'>{title}</h3>
+                <p>
+                  By {firstName} {lastName}
+                </p>
+              </div>
+
+              <div className='course--description'>
+                <ReactMarkdown source={description} />
+              </div>
+            </div>
+
+            <div className='grid-25 grid-right'>
+              <div className='course--stats'>
+                <ul className='course--stats--list'>
+                  <li className='course--stats--list--item'>
+                    <h4>Estimated Time</h4>
+                    <h3>{estimatedTime}</h3>
+                  </li>
+
+                  <li className='course--stats--list--item'>
+                    <h4>Materials Needed</h4>
+                    <ReactMarkdown source={materialsNeeded} />
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return <div>Loading...</div>;
     }
   }
 
-  componentDidMount() {
-    const { match } = this.props;
-    this.getCourse(match.params.id);
-  }
-
-  getCourse = (id) => {
-    axios.get(`http://localhost:5000/api/courses/${id}`)
-      .then((res) => {
-        const course = res.data;
-        this.setState({ course });
-      })
-      .catch(err => {
-        if (err) {
-            console.log(err);
-            const { history } = this.props;
-            history.push("/notfound");
-        }
-    });
-  }
-
-handleDelete = (user, id) => {
-  const { emailAddress, password } = user;
-  axios({
-    method: 'delete',
-    url: `http://localhost:5000/api/courses/${id}`,
-    auth: {
-      username: emailAddress,
-      password,
-    },
-  })
-    .then(() => {
-      const { history } = this.props;
-      history.push('/');
-    })
-    .catch(err => {
-      if (err) {
-          console.log(err);
-          const { history } = this.props;
-          history.push("/notfound");
-      }
-  });
-}
-
-
-  render() {
-    return(
-      <div>
-        <div className="actions--bar">
-          <div className="bounds">
-            <div className="grid-100">
-              <span>
-                <Link className="button" to={"/courses/" + this.state.course.id + "/update"}>Update Course</Link>
-                <Link className="button" to={"/"} onClick={this.handleDelete}>Delete Course</Link>
-              </span>
-              <Link className="button button-secondary" to="/">Return to List</Link>
-            </div>
-          </div>
-        </div>
-        <div className="bounds course--detail">
-          <div className="grid-66">
-            <div className="course--header">
-              <h4 className="course--label">Course</h4>
-              <h3 className="course--title">{this.state.course.title}</h3>
-              <p>By {this.state.user.firstName} {this.state.user.lastName}</p>
-            </div>
-            <div className="course--description">
-              <ReactMarkdown source={this.state.course.description} />
-            </div>
-          </div>
-          <div className="grid-25 grid-right">
-            <div className="course--stats">
-              <ul className="course--stats--list">
-                <li className="course--stats--list--item">
-                  <h4>Estimated Time</h4>
-                  <h3>{this.state.course.estimatedTime}</h3>
-                </li>
-                <li className="course--stats--list--item">
-                  <h4>Materials Needed</h4>
-                  <ul>
-                    <ReactMarkdown source={this.state.course.materialsNeeded}/>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-    </div>
-    );
-  }
 }
 
 export default CourseDetail;
