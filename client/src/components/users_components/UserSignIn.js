@@ -9,6 +9,43 @@ export default class UserSignIn extends Component {
     errors: [],
   }
 
+
+  change = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
+  }
+
+  submit = () => {
+    const { context } = this.props;
+    const { from } = this.props.location.state || { from: { pathname: '/authenticated' } };
+    const { emailAddress, password } = this.state;
+
+    context.actions.signIn(emailAddress, password)
+      .then((user) => {
+        if (user === null) {
+          this.setState(() => {
+            return { errors: [ 'Sign-in was unsuccessful' ] };
+          });
+        } else {
+          this.props.history.push(from);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        this.props.history.push('/error');
+      });
+  }
+
+  cancel = () => {
+    this.props.history.push('/');
+  }
+
   render() {
     const {
       emailAddress,
@@ -51,39 +88,4 @@ export default class UserSignIn extends Component {
     );
   }
 
-  change = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-
-    this.setState(() => {
-      return {
-        [name]: value
-      };
-    });
-  }
-
-  submit = () => {
-    const { context } = this.props;
-    const { from } = this.props.location.state || { from: { pathname: '/authenticated' } };
-    const { emailAddress, password } = this.state;
-
-    context.actions.signIn(emailAddress, password)
-      .then((user) => {
-        if (user === null) {
-          this.setState(() => {
-            return { errors: [ 'Sign-in was unsuccessful' ] };
-          });
-        } else {
-          this.props.history.push(from);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        this.props.history.push('/error');
-      });
-  }
-
-  cancel = () => {
-    this.props.history.push('/');
-  }
 }

@@ -15,15 +15,14 @@ import CourseDetail from "./components/course_components/CourseDetail";
 import CreateCourse from "./components/course_components/CreateCourse";
 import UpdateCourse from "./components/course_components/UpdateCourse";
 
-
 import UserSignIn from './components/users_components/UserSignIn'
 import UserSignUp from './components/users_components/UserSignUp'
 import UserSignOut from './components/users_components/UserSignOut'
 import Authenticated from './components/Authenticated';
 
-import Forbidden from './Forbidden';
-import ErrorPage from './ErrorPage';
-import NotFound from './NotFound';
+import NotFound from './components/NotFound';
+import Forbidden from './components/Forbidden';
+import UnhandledError from './components/UnhandledError';
 
 import withContext from "./Context";
 import PrivateRoute from './PrivateRoute';
@@ -89,7 +88,7 @@ class App extends Component {
             />
             <Route path='/notfound' component={NotFound} />
             <Route path='/forbidden' component={Forbidden} />
-            <Route path='/error' component={ErrorPage} />
+            <Route path='/error' component={UnhandledError} />
           </Switch>
         </div>
       </Router>

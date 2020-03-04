@@ -8,7 +8,65 @@ export default class UserSignUp extends Component {
     lastName: '',
     emailAddress: '',
     password: '',
+    confirmPassword: '',
     errors: [],
+  }
+
+
+  change = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
+  }
+  
+  submit = () => {
+    const { context } = this.props; 
+    const {
+      firstName,
+      lastName,
+      emailAddress,
+      password,
+      confirmPassword
+    } = this.state;
+
+    // Create user
+    const user = {
+      firstName,
+      lastName,
+      emailAddress,
+      password,
+    };
+    if (password !== confirmPassword) {
+      this.setState({
+        errors: ['Your password and confirm passowrd should be the identical']
+      });
+    } else {
+      // If password and confirm password are correct then new user could be created 
+      context.data
+        .createUser(user)
+        .then(errors => {
+          if (errors.length) {
+            this.setState({ errors });
+          } else {
+            context.actions.signIn(emailAddress, password).then(() => {
+              this.props.history.push('/');
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.props.history.push('/error');
+        });
+    }
+  }
+
+  cancel = () => {
+   this.props.history.push('/');
   }
 
   render() {
@@ -17,6 +75,7 @@ export default class UserSignUp extends Component {
       lastName,
       emailAddress,
       password,
+      confirmPassword,
       errors
     } = this.state;
 
@@ -59,6 +118,14 @@ export default class UserSignUp extends Component {
                   value={password} 
                   onChange={this.change} 
                   placeholder="Password" />
+                <input
+                  id='confirmPassword'
+                  name='confirmPassword'
+                  type='password'
+                  className=''
+                  placeholder='Confirm Password'
+                  value={confirmPassword}
+                  onChange={this.change} />
               </React.Fragment>
             )} />
           <p>
@@ -69,53 +136,4 @@ export default class UserSignUp extends Component {
     );
   }
 
-  change = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-
-    this.setState(() => {
-      return {
-        [name]: value
-      };
-    });
-  }
-
-  submit = () => {
-    const { context } = this.props; 
-    const {
-      firstName,
-      lastName,
-      emailAddress,
-      password,
-    } = this.state;
-
-    // Create user
-    const user = {
-      firstName,
-      lastName,
-      emailAddress,
-      password,
-    };
-
-    context.data.createUser(user)
-      .then( errors => {
-        if (errors.length) {
-          this.setState({ errors });
-        } else {
-          context.actions.signIn(emailAddress, password)
-            .then(() => {
-              this.props.history.push('/authenticated');    
-            });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        this.props.history.push('/error');
-      });
-  
-  }
-
-  cancel = () => {
-   this.props.history.push('/');
-  }
 }
