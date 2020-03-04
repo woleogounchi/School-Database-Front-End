@@ -16,7 +16,7 @@ class UpdateCourse extends Component {
     context.data.getCourse(this.props.match.params.id)
       .then(singleCourse => {
         //if the user id is different of the course creator id then user rerouted to '/forbidden' page.
-        if (context.authenticatedUser.id !== singleCourse.course.userId) {
+        if (context.authenticatedUser.id !== singleCourse.userId) {
           console.log('userId of course', singleCourse.userId);
           this.props.history.push('/forbidden');
         }

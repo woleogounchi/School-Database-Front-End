@@ -7,7 +7,7 @@ class CourseDetail extends Component {
     const { context, courseId } = this.props;
     context.data.getCourse(courseId)
       .then(singleCourse => {
-        // If title area empty, it means there's no course an user redirected to notfound
+        // If title area empty, it means there's no course and user redirected to '/notfound'
         if (singleCourse.title === '') {
           this.props.history.push('/notfound');
         }
