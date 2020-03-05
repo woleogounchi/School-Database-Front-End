@@ -39,6 +39,7 @@ class CourseDetail extends Component {
     const signedInUserId = authenticatedUser.id;
     const signedInUserEmailAddress = authenticatedUser.emailAddress;
     const signedInUserPassword = authenticatedUser.password;
+    // If signed in user is course owner then delete the course
     if (courseOwnerId === signedInUserId) {
       context.data.deleteCourse(courseId, signedInUserEmailAddress, signedInUserPassword)
         .then(errors => {
