@@ -33,7 +33,6 @@ class UpdateCourse extends Component {
             userId: singleCourse.userId,
             firstName: singleCourse.User.firstName,
             lastName: singleCourse.User.lastName,
-            emailAddress: singleCourse.User.emailAddress
           });
         }
       })
@@ -64,7 +63,6 @@ class UpdateCourse extends Component {
       estimatedTime,
       materialsNeeded,
       userId,
-      emailAddress,
       id
     } = this.state;
     const course = {
@@ -75,6 +73,7 @@ class UpdateCourse extends Component {
       userId
     };
 
+    const emailAddress = context.authenticatedUser.emailAddress;
     const password = context.authenticatedUser.password;
 
     if (title === null && description === null) {
@@ -101,7 +100,6 @@ class UpdateCourse extends Component {
 
   // The cancel button redirect to the course detail page
   cancel = () => {
-    console.log(this.state);
     this.props.history.push(`/courses/${this.state.id}`);
   };
   

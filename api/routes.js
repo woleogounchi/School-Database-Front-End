@@ -153,20 +153,21 @@ router.get('/courses/:id', asyncHandler(async(req, res) => {
 
 // POST /api/courses 201 - Creates a course, sets the Location header to the URI for the course, and returns no content
 router.post('/courses', authenticateUser, asyncHandler(async (req, res) => {
-const user = req.currentUser;
-try {
-  req.body.userId = user.dataValues.id;
-  const course = await data.Course.create(req.body);
-  const courseId = course.dataValues.id;
-  res.status(201).set('Location', `/courses/${courseId}`).end()
-} catch (error) {
-  if (error.name === 'SequelizeValidationError') {
-    const errorMessages = error.errors.map(error => error.message);
-    res.status(400).json({ errors: errorMessages });
-  } else {
-    throw error;
+  console.log(req.body);
+  const user = req.currentUser;
+  try {
+    req.body.userId = user.dataValues.id;
+    const course = await data.Course.create(req.body);
+    const courseId = course.dataValues.id;
+    res.status(201).set('Location', `/courses/${courseId}`).end()
+  } catch (error) {
+    if (error.name === 'SequelizeValidationError') {
+      const errorMessages = error.errors.map(error => error.message);
+      res.status(400).json({ errors: errorMessages });
+    } else {
+      throw error;
+    }
   }
-}
 }));
 
 // PUT /api/courses/:id 204 - Updates a course and returns no content

@@ -35,10 +35,11 @@ class CourseDetail extends Component {
   handleDelete = () => {
     const { context, courseId } = this.props;
     const { authenticatedUser } = context;
-    const courseOwnerUser = this.state.singleCourse.User.emailAddress;
+    const courseOwnerId = this.state.singleCourse.User.id;
+    const signedInUserId = authenticatedUser.id;
     const signedInUserEmailAddress = authenticatedUser.emailAddress;
     const signedInUserPassword = authenticatedUser.password;
-    if (courseOwnerUser === signedInUserEmailAdress) {
+    if (courseOwnerId === signedInUserId) {
       context.data.deleteCourse(courseId, signedInUserEmailAddress, signedInUserPassword)
         .then(errors => {
           if (errors.length) {

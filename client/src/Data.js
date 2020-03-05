@@ -114,8 +114,10 @@ export default class Data {
       `/courses/${id}`,
       'DELETE',
       null,
-      true,
-      { emailAddress, password }
+      true,{ 
+        emailAddress, 
+        password 
+      }
     );
     if (response.status === 204) {
       return [];
