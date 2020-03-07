@@ -29,7 +29,7 @@ export default class UserSignIn extends Component {
       .then((user) => {
         if (user === null) {
           this.setState(() => {
-            return { errors: [ 'Sign-in was unsuccessful' ] };
+            return { errors: [ 'Sign-in was unsuccessful' ] }
           });
         } else {
           this.props.history.push(from);
