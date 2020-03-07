@@ -80,6 +80,7 @@ class UpdateCourse extends Component {
       this.setState({
         errors: ['Please add missing title and/or description']
       });
+      
     } else if (userId !== signedId) {
       this.props.history.push(`/forbidden`);
     } else {
@@ -116,7 +117,8 @@ class UpdateCourse extends Component {
       } = this.state;
 
       return (
-        <div className='bounds course--detail'>
+        <div>
+          <div className='bounds course--detail'>
           <h1>Update course</h1>
           <Form
             cancel={this.cancel}
@@ -193,6 +195,7 @@ class UpdateCourse extends Component {
             )}
           />
         </div>
+      </div>
       );
     } else {
       return <div>Loading...</div>;
