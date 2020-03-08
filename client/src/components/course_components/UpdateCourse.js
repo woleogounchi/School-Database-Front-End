@@ -72,7 +72,6 @@ class UpdateCourse extends Component {
       materialsNeeded,
       userId
     };
-
     const emailAddress = context.authenticatedUser.emailAddress;
     const password = context.authenticatedUser.password;
 
@@ -80,7 +79,6 @@ class UpdateCourse extends Component {
       this.setState({
         errors: ['Please add missing title and/or description']
       });
-      
     } else if (userId !== signedId) {
       this.props.history.push(`/forbidden`);
     } else {
