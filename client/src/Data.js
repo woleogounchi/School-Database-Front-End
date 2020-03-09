@@ -96,12 +96,12 @@ export default class Data {
     } else if (response.status === 400) {
       return response.json().then(data => {
         console.log(data);
-        return data.errors;
+        return data.message;
       });
     } else if (response.status === 403) {
       return response.json().then(data => {
         console.log(data);
-        return data.errors;
+        return data.message;
       });
     } else {
       throw new Error();

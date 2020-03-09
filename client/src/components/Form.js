@@ -35,20 +35,31 @@ const Form = (props) => {
 
 function ErrorsDisplay({ errors }) {
   let errorsDisplay = null;
-
-  if (errors.length) {
+  if (typeof errors === 'object') {
+    if (errors.length) {
+      errorsDisplay = (
+        <div>
+          <h2 className="validation--errors--label">Validation errors</h2>
+          <div className="validation-errors">
+            <ul>
+              {errors.map((error, i) => <li key={i}>{error}</li>)}
+            </ul>
+          </div>
+        </div>
+      );
+    } 
+  } else if (typeof errors === 'string') {
     errorsDisplay = (
       <div>
         <h2 className="validation--errors--label">Validation errors</h2>
         <div className="validation-errors">
           <ul>
-            {errors.map((error, i) => <li key={i}>{error}</li>)}
+            <li>{errors}</li>
           </ul>
         </div>
       </div>
     );
   }
-
   return errorsDisplay;
 }
 

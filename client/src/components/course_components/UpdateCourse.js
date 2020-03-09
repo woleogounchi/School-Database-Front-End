@@ -75,11 +75,7 @@ class UpdateCourse extends Component {
     const emailAddress = context.authenticatedUser.emailAddress;
     const password = context.authenticatedUser.password;
 
-    if (title === null && description === null) {
-      this.setState({
-        errors: ['Please add missing title and/or description']
-      });
-    } else if (userId !== signedId) {
+    if (userId !== signedId) {
       this.props.history.push(`/forbidden`);
     } else {
       context.data.updateCourse(id, emailAddress, password, course)

@@ -27,11 +27,11 @@ export default class UserSignIn extends Component {
     const { emailAddress, password } = this.state;
     context.actions.signIn(emailAddress, password)
       .then((user) => {
-        if (user === null) {
-          this.setState(() => {
-            return { errors: [ 'Sign-in was unsuccessful' ] }
-          });
-        } else {
+          if (user === null) {
+            this.setState(() => {
+              return { errors: [ 'Sign-in was unsuccessful' ] }
+            }); 
+          } else {
           this.props.history.push(from);
         }
       })

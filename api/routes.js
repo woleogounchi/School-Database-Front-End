@@ -209,7 +209,7 @@ if (course) {
     await course.destroy();
     res.status(204).end();
   } else {
-    res.status(403).json({ message: "Access denied"});
+    res.status(403).json({ errors: "Access denied"});
   }
 } else {
   res.sendStatus(404);
