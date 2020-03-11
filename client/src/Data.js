@@ -144,7 +144,11 @@ export default class Data {
     if (response.status === 200) {
       return response.json();
     } else if (response.status === 401) {
-      return null;
+      //return null;
+      return response.json().then(data => {
+        console.log(data);
+        return data.message;
+      });
     } else {
       throw new Error();
     }

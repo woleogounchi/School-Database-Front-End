@@ -26,12 +26,10 @@ export default class UserSignIn extends Component {
     const { from } = this.props.location.state || { from: { pathname: '/authenticated' } };
     const { emailAddress, password } = this.state;
     context.actions.signIn(emailAddress, password)
-      .then((user) => {
-          if (user === null) {
-            this.setState(() => {
-              return { errors: [ 'Sign-in was unsuccessful' ] }
-            }); 
-          } else {
+      .then(errors => {
+        if (errors.length) {
+          this.setState({ errors });
+        } else {
           this.props.history.push(from);
         }
       })
@@ -39,7 +37,7 @@ export default class UserSignIn extends Component {
         console.error(error);
         this.props.history.push('/error');
       });
-  }
+    }
 
   cancel = () => {
     this.props.history.push('/');
