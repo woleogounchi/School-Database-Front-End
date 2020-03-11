@@ -26,18 +26,18 @@ export default class UserSignIn extends Component {
     const { from } = this.props.location.state || { from: { pathname: '/authenticated' } };
     const { emailAddress, password } = this.state;
     context.actions.signIn(emailAddress, password)
-      .then(errors => {
-        if (errors.length) {
-          this.setState({ errors });
-        } else {
-          this.props.history.push(from);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        this.props.history.push('/error');
-      });
-    }
+    .then((user) => {
+      if (user === null) {
+        this.setState({ errors: ['Access denied'] });
+      } else {
+        this.props.history.push(from);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      this.props.history.push('/error');
+    });
+  }
 
   cancel = () => {
     this.props.history.push('/');

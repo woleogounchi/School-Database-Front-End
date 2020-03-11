@@ -43,7 +43,7 @@ export default class UserSignUp extends Component {
     };
     if (password !== confirmPassword) {
       this.setState({
-        errors: ['Your password and confirm passowrd should be the identical']
+        errors: ['Your password and confirm password should be identical']
       });
     } else {
       // If password and confirm password are correct then new user could be created 

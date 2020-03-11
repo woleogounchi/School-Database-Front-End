@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = props => {
-  const { authenticatedUser } = props.context;
+  console.log(props);
+  const authUser = props.context.authenticatedUser;
     return (
       <div className="header">
         <div className="bounds">
@@ -10,7 +11,7 @@ const Header = props => {
             <h1 className="header--logo">Courses</h1>
           </Link>
           <nav>
-            {authenticatedUser === null ? (
+            {authUser === null ? (
               <React.Fragment>
 
                 <Link className="signup" to="/signup">Sign Up</Link>
@@ -18,7 +19,7 @@ const Header = props => {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <span>Welcome {authenticatedUser.firstName}!</span>
+                <span>Welcome {authUser.firstName}!</span>
                 <Link to="/signout">Sign Out</Link>
               </React.Fragment>
             )}
